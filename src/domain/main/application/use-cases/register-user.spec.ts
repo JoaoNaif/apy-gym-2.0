@@ -1,48 +1,42 @@
-import { InMemoryGymRepository } from 'test/repositories/in-memory-gym-repository'
-import { RegisterGymUseCase } from './register-gym'
 import { FakeHasher } from 'test/cryptography/fake-hasher'
+import { InMemoryUserRepository } from 'test/repositories/in-memory-user-repository'
+import { RegisterUserUseCase } from './register-user'
 
-let inMemoryGymRepository: InMemoryGymRepository
+let inMemoryUserRepository: InMemoryUserRepository
 let fakeHasher: FakeHasher
-let sut: RegisterGymUseCase
+let sut: RegisterUserUseCase
 
-describe('Create Gym', () => {
+describe('Create User', () => {
   beforeEach(() => {
-    inMemoryGymRepository = new InMemoryGymRepository()
+    inMemoryUserRepository = new InMemoryUserRepository()
     fakeHasher = new FakeHasher()
-    sut = new RegisterGymUseCase(inMemoryGymRepository, fakeHasher)
+    sut = new RegisterUserUseCase(inMemoryUserRepository, fakeHasher)
   })
 
-  it('should be able to register a new gym', async () => {
+  it('should be able to register a new user', async () => {
     const result = await sut.execute({
       name: 'Acqua Gym',
-      cnpj: '11222333444455',
       phone: '11951615111',
-      address: 'Rua teste',
       email: 'acqua@email.com',
       password: '132456',
-      openingHours: '13h as 20h',
-      numberPeop: 0,
+      plan: 'GOLD',
       latitude: -23.623352,
       longitude: -46.558612,
     })
 
     expect(result.isRight()).toBe(true)
     expect(result.value).toEqual({
-      gym: inMemoryGymRepository.items[0],
+      user: inMemoryUserRepository.items[0],
     })
   })
 
   it('password must be encrypted', async () => {
     const result = await sut.execute({
       name: 'Acqua Gym',
-      cnpj: '11222333444455',
       phone: '11951615111',
-      address: 'Rua teste',
       email: 'acqua@email.com',
       password: '123456',
-      openingHours: '13h as 20h',
-      numberPeop: 0,
+      plan: 'GOLD',
       latitude: -23.623352,
       longitude: -46.558612,
     })
@@ -50,6 +44,6 @@ describe('Create Gym', () => {
     const hashedPassword = await fakeHasher.hash('123456')
 
     expect(result.isRight()).toBe(true)
-    expect(inMemoryGymRepository.items[0].password).toEqual(hashedPassword)
+    expect(inMemoryUserRepository.items[0].password).toEqual(hashedPassword)
   })
 })

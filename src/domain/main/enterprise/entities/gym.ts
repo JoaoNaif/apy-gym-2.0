@@ -13,6 +13,8 @@ export interface GymProps {
   cnpj: Cnpj
   numberPeop: number
   openingHours: string
+  assessment: number
+  checkIns: number
   latitude: number
   longitude: number
   active: boolean
@@ -47,6 +49,14 @@ export class Gym extends Entity<GymProps> {
 
   get numberPeop() {
     return this.props.numberPeop
+  }
+
+  get assessment() {
+    return this.props.assessment
+  }
+
+  get checkIns() {
+    return this.props.checkIns
   }
 
   get openingHours() {
@@ -87,7 +97,7 @@ export class Gym extends Entity<GymProps> {
     this.props.email = email
   }
 
-  set password(password: string){
+  set password(password: string) {
     this.props.password = password
   }
 
@@ -98,6 +108,16 @@ export class Gym extends Entity<GymProps> {
 
   set numberPeop(numberPeop: number) {
     this.props.numberPeop = numberPeop
+    this.touch()
+  }
+
+  set checkIns(checkIns: number) {
+    this.props.checkIns = checkIns
+    this.touch()
+  }
+
+  set assessment(assessment: number) {
+    this.props.assessment = assessment
     this.touch()
   }
 
@@ -121,18 +141,24 @@ export class Gym extends Entity<GymProps> {
     this.touch()
   }
 
-  private touch () {
+  private touch() {
     this.props.updatedAt = new Date()
   }
 
   static create(
-    props: Optional<GymProps, 'createdAt' | 'active' >,
-    id?: UniqueEntityId
+    props: Optional<
+      GymProps,
+      'createdAt' | 'active' | 'assessment' | 'checkIns' | 'numberPeop'
+    >,
+    id?: UniqueEntityId,
   ) {
     const gym = new Gym(
       {
         ...props,
         active: true,
+        assessment: 0,
+        numberPeop: 0,
+        checkIns: 0,
         createdAt: props.createdAt ?? new Date(),
       },
       id,

@@ -1,34 +1,34 @@
-import { InMemoryGymRepository } from 'test/repositories/in-memory-gym-repository'
 import { FakeHasher } from 'test/cryptography/fake-hasher'
+import { InMemoryUserRepository } from 'test/repositories/in-memory-user-repository'
 import { FakeEncrypter } from 'test/cryptography/fake-encrypter'
-import { AuthenticateGymUseCase } from './authenticate-gym'
-import { makeGym } from 'test/factories/make-gym'
+import { AuthenticateUserUseCase } from './authenticate-user'
+import { makeUser } from 'test/factories/make-user'
 
-let inMemoryGymRepository: InMemoryGymRepository
+let inMemoryUserRepository: InMemoryUserRepository
 let fakeHasher: FakeHasher
 let fakeEncrypter: FakeEncrypter
 
-let sut: AuthenticateGymUseCase
+let sut: AuthenticateUserUseCase
 
-describe('Authenticate Gym', () => {
+describe('Authenticate User', () => {
   beforeEach(() => {
-    inMemoryGymRepository = new InMemoryGymRepository()
+    inMemoryUserRepository = new InMemoryUserRepository()
     fakeHasher = new FakeHasher()
     fakeEncrypter = new FakeEncrypter()
-    sut = new AuthenticateGymUseCase(
-      inMemoryGymRepository,
+    sut = new AuthenticateUserUseCase(
+      inMemoryUserRepository,
       fakeHasher,
       fakeEncrypter,
     )
   })
 
-  it('Gym should be able to authenticate', async () => {
-    const gym = makeGym({
+  it('User should be able to authenticate', async () => {
+    const user = makeUser({
       email: 'johndoe@email.com',
       password: await fakeHasher.hash('123456'),
     })
 
-    inMemoryGymRepository.items.push(gym)
+    inMemoryUserRepository.items.push(user)
 
     const result = await sut.execute({
       email: 'johndoe@email.com',
