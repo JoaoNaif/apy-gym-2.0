@@ -1,4 +1,5 @@
 export interface GetGymDTO {
+  id: string
   name: string
   address: string
   phone: string

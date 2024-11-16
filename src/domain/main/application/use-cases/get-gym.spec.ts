@@ -21,6 +21,23 @@ describe('Get Gym', () => {
       gymId: gym.id.toString(),
     })
 
-    expect(result.isRight()).toBe(true)
+    expect(result.value).toMatchObject({
+      gym: {
+        id: expect.any(String),
+        name: expect.any(String),
+        address: expect.any(String),
+        phone: expect.any(String),
+        email: expect.any(String),
+        cnpj: expect.any(String),
+        numberPeop: expect.any(Number),
+        assessment: expect.any(Number),
+        checkIns: expect.any(Number),
+        openingHours: expect.any(String),
+        latitude: expect.any(Number),
+        longitude: expect.any(Number),
+        createdAt: expect.any(Date),
+        updatedAt: expect.any(Date),
+      },
+    })
   })
 })

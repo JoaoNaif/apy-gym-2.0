@@ -1,50 +1,39 @@
 import { Either, left, right } from '../../../../core/either'
 import { GymRepository } from '../repositories/gym-repository'
 import { ResourceNotFoundError } from '../../../../core/errors/errors/resource-not-found-error'
-import { GetGymDTO } from './dtos/get-gym-dto'
+import { GetMetricsGymDTO } from './dtos/get-metrics-gym-dto'
 
-interface GetGymUseCaseRequest {
+interface GetMetricsGymUseCaseRequest {
   gymId: string
 }
 
-type GetGymUseCaseResponse = Either<
+type GetMetricsGymUseCaseResponse = Either<
   ResourceNotFoundError,
   {
-    gym: GetGymDTO
+    gym: GetMetricsGymDTO
   }
 >
 
-export class GetGymUseCase {
+export class GetMetricsGymUseCase {
   constructor(private gymRepository: GymRepository) {}
 
   async execute({
     gymId,
-  }: GetGymUseCaseRequest): Promise<GetGymUseCaseResponse> {
+  }: GetMetricsGymUseCaseRequest): Promise<GetMetricsGymUseCaseResponse> {
     const gym = await this.gymRepository.findById(gymId)
 
     if (!gym) {
       return left(new ResourceNotFoundError())
     }
 
-    const gymDTO: GetGymDTO = {
-      id: gym.id.toString(),
-      address: gym.address,
-      name: gym.name,
-      cnpj: gym.cnpj.value,
-      phone: gym.phone.value,
-      email: gym.email,
+    const gymMetricsDTO: GetMetricsGymDTO = {
       numberPeop: gym.numberPeop,
       assessment: gym.assessment,
       checkIns: gym.checkIns,
-      openingHours: gym.openingHours,
-      latitude: gym.latitude,
-      longitude: gym.longitude,
-      createdAt: gym.createdAt,
-      updatedAt: gym.updatedAt ?? new Date(),
     }
 
     return right({
-      gym: gymDTO,
+      gym: gymMetricsDTO,
     })
   }
 }

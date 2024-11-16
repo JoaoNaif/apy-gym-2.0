@@ -11,10 +11,10 @@ export interface GymProps {
   email: string
   password: string
   cnpj: Cnpj
-  numberPeop: number
   openingHours: string
-  assessment: number
+  numberPeop: number
   checkIns: number
+  assessment: number
   latitude: number
   longitude: number
   active: boolean
@@ -155,10 +155,10 @@ export class Gym extends Entity<GymProps> {
     const gym = new Gym(
       {
         ...props,
-        active: true,
-        assessment: 0,
-        numberPeop: 0,
-        checkIns: 0,
+        active: props.active ?? true,
+        assessment: props.assessment ?? 0,
+        numberPeop: props.numberPeop ?? 0,
+        checkIns: props.checkIns ?? 0,
         createdAt: props.createdAt ?? new Date(),
       },
       id,
