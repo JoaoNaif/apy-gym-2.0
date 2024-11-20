@@ -27,7 +27,7 @@ describe('Get User', () => {
         name: expect.any(String),
         email: expect.any(String),
         phone: expect.any(String),
-        plan: expect.any(String),
+        planId: user.planId,
         latitude: expect.any(Number),
         longitude: expect.any(Number),
         createdAt: expect.any(Date),

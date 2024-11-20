@@ -19,7 +19,7 @@ describe('Create User', () => {
       phone: '11951615111',
       email: 'acqua@email.com',
       password: '132456',
-      plan: 'GOLD',
+      planId: null,
       latitude: -23.623352,
       longitude: -46.558612,
     })
@@ -36,7 +36,7 @@ describe('Create User', () => {
       phone: '11951615111',
       email: 'acqua@email.com',
       password: '123456',
-      plan: 'GOLD',
+      planId: null,
       latitude: -23.623352,
       longitude: -46.558612,
     })

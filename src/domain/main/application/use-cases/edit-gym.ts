@@ -49,6 +49,8 @@ export class EditGymUseCase {
     gym.latitude = latitude ?? gym.latitude
     gym.longitude = longitude ?? gym.longitude
 
+    await this.gymRepository.save(gym)
+
     return right({
       gym,
     })

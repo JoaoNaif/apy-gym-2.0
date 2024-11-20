@@ -4,13 +4,14 @@ import { User } from '../../enterprise/entities/user'
 import { UserAlreadyExistError } from './errors/user-already-exist-error'
 import { UserRepository } from '../repositories/user-repository'
 import { Phone } from '../../enterprise/entities/value-objects/phone'
+import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 
 interface RegisterUserUseCaseRequest {
   name: string
   email: string
   phone: string
   password: string
-  plan: 'GOLD' | 'SILVER' | 'BRONZE'
+  planId: UniqueEntityId | null
   latitude: number
   longitude: number
 }
@@ -32,7 +33,7 @@ export class RegisterUserUseCase {
     name,
     password,
     email,
-    plan,
+    planId,
     phone,
     latitude,
     longitude,
@@ -51,7 +52,7 @@ export class RegisterUserUseCase {
       email,
       phone: phoneText,
       password: hashedPassword,
-      plan,
+      planId,
       latitude,
       longitude,
     })

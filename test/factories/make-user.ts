@@ -15,7 +15,7 @@ export function makeUser(
       phone: Phone.createFromText(fakePhone),
       password: faker.internet.password(),
       email: faker.internet.email(),
-      plan: 'GOLD',
+      planId: null,
       latitude: faker.location.latitude(),
       longitude: faker.location.longitude(),
       ...override,

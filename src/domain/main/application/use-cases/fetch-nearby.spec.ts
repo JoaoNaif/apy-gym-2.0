@@ -13,7 +13,7 @@ describe('Fetch Nearby Gym', () => {
     sut = new FetchNearbyUseCase(inMemoryGymRepository)
   })
 
-  it('Should be able to delete a gym', async () => {
+  it('It should be possible to find the nearest gyms (10km)', async () => {
     const newGym1 = makeGym(
       {
         name: 'gym near',
@@ -23,7 +23,17 @@ describe('Fetch Nearby Gym', () => {
       new UniqueEntityId('gym-1'),
     )
 
+    const newGym3 = makeGym(
+      {
+        name: 'gym near 2',
+        latitude: -23.5591942,
+        longitude: -46.5836981,
+      },
+      new UniqueEntityId('gym-1'),
+    )
+
     await inMemoryGymRepository.create(newGym1)
+    await inMemoryGymRepository.create(newGym3)
 
     const newGym2 = makeGym(
       {
@@ -43,8 +53,13 @@ describe('Fetch Nearby Gym', () => {
 
     if (result.isRight()) {
       const gyms = result.value.gyms
-      expect(gyms).toHaveLength(1)
-      expect(gyms).toEqual([expect.objectContaining({ name: 'gym near' })])
+      expect(gyms).toHaveLength(2)
+      expect(gyms).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ name: 'gym near' }),
+          expect.objectContaining({ name: 'gym near 2' }),
+        ]),
+      )
     }
   })
 })

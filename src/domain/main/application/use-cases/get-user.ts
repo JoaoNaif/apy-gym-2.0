@@ -31,7 +31,7 @@ export class GetUserUseCase {
       name: user.name,
       email: user.email,
       phone: user.phone.value,
-      plan: user.plan,
+      planId: user.planId?.toString() ?? null,
       latitude: user.latitude,
       longitude: user.longitude,
       createdAt: user.createdAt,

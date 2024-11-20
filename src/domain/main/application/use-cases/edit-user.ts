@@ -43,6 +43,8 @@ export class EditUserUseCase {
     user.latitude = latitude ?? user.latitude
     user.longitude = longitude ?? user.longitude
 
+    await this.userRepository.save(user)
+
     return right({
       user,
     })

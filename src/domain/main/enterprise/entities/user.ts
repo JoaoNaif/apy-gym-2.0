@@ -8,7 +8,7 @@ export interface UserProps {
   email: string
   phone: Phone
   password: string
-  plan: 'GOLD' | 'SILVER' | 'BRONZE'
+  planId: UniqueEntityId | null
   latitude: number
   longitude: number
   createdAt: Date
@@ -31,8 +31,8 @@ export class User extends Entity<UserProps> {
     return this.props.password
   }
 
-  get plan() {
-    return this.props.plan
+  get planId() {
+    return this.props.planId
   }
 
   get latitude() {
@@ -59,8 +59,8 @@ export class User extends Entity<UserProps> {
     this.props.phone = phone
   }
 
-  set plan(plan: 'GOLD' | 'SILVER' | 'BRONZE') {
-    this.props.plan = plan
+  set planId(planId: UniqueEntityId | null) {
+    this.props.planId = planId
   }
 
   set latitude(latitude: number) {

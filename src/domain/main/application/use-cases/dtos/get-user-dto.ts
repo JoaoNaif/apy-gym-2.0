@@ -3,7 +3,7 @@ export interface GetUserDTO {
   name: string
   email: string
   phone: string
-  plan: 'GOLD' | 'SILVER' | 'BRONZE'
+  planId: string | null
   latitude: number
   longitude: number
   createdAt: Date
